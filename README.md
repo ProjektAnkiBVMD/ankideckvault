@@ -1,6 +1,6 @@
 # ankideckvault
-![Uploading DALL·E 2024-01-18 02.22.45 - A modern and professional logo for an application called 'Anki DeckVault'. The logo should include a stylized image of a vault or safe, combined with .png…]()
 
+!['Anki DeckVault'](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/5d28b549-45e1-4027-9217-11c190dca2d5)
 
 ![image](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/5f55b391-ca7a-41e5-87d3-e0a34fef7b4c)
 
