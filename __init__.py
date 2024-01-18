@@ -28,6 +28,7 @@ import os
 import platform
 import subprocess
 
+config = mw.addonManager.getConfig(__name__)
 
 def decrypt_data(encrypted_data, passphrase):
     hashed_passphrase = sha256(passphrase.encode()).hexdigest()
