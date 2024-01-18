@@ -1,4 +1,5 @@
 # ankideckvault
+![image](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/53a076a5-033b-47c8-801b-1be5065930a5)
 
 ![image](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/5f55b391-ca7a-41e5-87d3-e0a34fef7b4c)
 
