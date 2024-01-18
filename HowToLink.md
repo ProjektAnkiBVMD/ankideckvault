@@ -1,12 +1,3 @@
-Open Google Drive:
-1. Right-click on your file.
-2. Click on share.
-
-3. Below the link, make sure not to restrict your sharing options.
-   ![image](https://lh3.googleusercontent.com/YWgGFuF1I9M5CLN_IFL1vVPNrUBYl0w7ClcspzwoGSh-CRw_kt6E-5Hf8wM9-KqWHJpchTnw9oFB6cr06w-Y_LNasYesEeNSLkFK8aGbflYsYLPw6-xcSzyLjgIpllwrOg=w1280)
-5. Copying a file link from Google Drive
-6. Click on Copy link.
-
 Step 1: Go to Google Drive and right click the file that you want to share, then click on "Share"
    ![image](https://lh3.googleusercontent.com/YWgGFuF1I9M5CLN_IFL1vVPNrUBYl0w7ClcspzwoGSh-CRw_kt6E-5Hf8wM9-KqWHJpchTnw9oFB6cr06w-Y_LNasYesEeNSLkFK8aGbflYsYLPw6-xcSzyLjgIpllwrOg=w1280)
    
