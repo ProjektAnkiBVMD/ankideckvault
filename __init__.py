@@ -73,7 +73,7 @@ class DataWindow(QDialog):
         self.addInputFields()
         self.fields_layout.addLayout(self.deckoverviewlayout)
         # Inputfield-Button
-        self.addInputFields_button = QPushButton("Add Inputfield", self)
+        self.addInputFields_button = QPushButton("Add input field", self)
         self.addInputFields_button.clicked.connect(self.addInputFields)
 
         # Speichern-Button
@@ -100,14 +100,14 @@ class DataWindow(QDialog):
 
         # Fenstereigenschaften
         self.setGeometry(300, 300, 500, 200)
-        self.setWindowTitle("Erstelle ein Deck Addon")
+        self.setWindowTitle("Create a DeckLink Collection")
 
     def addInputFields(self):
         row_layout = QHBoxLayout()
         name_input = QLineEdit(self)
-        name_input.setPlaceholderText("Write Deckname here")
+        name_input.setPlaceholderText("Write deck name here")
         link_input = QLineEdit(self)
-        link_input.setPlaceholderText("Write Link here (with http:// or https://)")
+        link_input.setPlaceholderText("Write link here (with http:// or https://)")
         row_layout.addWidget(name_input)
         row_layout.addWidget(link_input)
         self.fields.append((name_input, link_input))
@@ -141,7 +141,7 @@ class DataWindow(QDialog):
             # Create manifest.json
             manifest_data = {
                 "package": f"{addon_name}",  # Replace with your folder name
-                "name": f"Decklink Collection: {addon_name}",  # Replace with your add-on's name
+                "name": f"DeckLink Collection: {addon_name}",  # Replace with your add-on's name
                 "conflicts": [],
                 "mod": int(time.time()),  # Sets to current Unix timestamp
                 "version": f"{formatted_datetime}v",
@@ -154,7 +154,7 @@ class DataWindow(QDialog):
             data = {"update_enabled": True}
             # Create manifest.json
             meta_data = {
-                "name": f"Decklink Collection: {addon_name}",
+                "name": f"DeckLink Collection: {addon_name}",
                 "mod": int(time.time()),
                 "min_point_version": 1,
             }
@@ -188,7 +188,9 @@ class DataWindow(QDialog):
             QMessageBox.information(
                 self,
                 "Success",
-                f".ankiaddon file created at {addon_output_path} \n A window will open a folder with 'output.ankiaddon' this is your Addon File",
+                f".ankiaddon file created at {addon_output_path}.<br>"
+                "The next window will open a folder with 'output.ankiaddon'.<br><br>"
+                "This is your addon file. Please copy it to a location of your choice and double-click it to install it in Anki.",
             )
             self.open_file_explorer(addon_dir)
 
@@ -215,13 +217,13 @@ class DataWindow(QDialog):
         self.addon_name_input = QLineEdit(
             self
         )  # Use self to make it accessible elsewhere
-        self.addon_name_input.setPlaceholderText("Write DeckLink Collection Name here")
+        self.addon_name_input.setPlaceholderText("Write name for DeckLink Collection here")
         top_down_layout.addWidget(self.addon_name_input)
         self.fields_layout.addLayout(top_down_layout)  # Add to the layout
 
     def addPasswordProtect(self):
         # Create a check box
-        checkbox = QCheckBox("Passwort Protection", self)
+        checkbox = QCheckBox("Passwort protection", self)
         checkbox.stateChanged.connect(self.checkboxStateChanged)
         # self.addpwd_input = QLineEdit(self)  # Use self to make it accessible elsewhere
         # self.addpwd_input.setPlaceholderText(" = (Type 'True' or 'False' here)")
@@ -235,11 +237,11 @@ class DataWindow(QDialog):
             # addpwd_inp == False:
             # self.addpwd_inp = True
             addpwd_inp = True
-            showInfo("Password Protection is Activated.")
+            showInfo("Password protection is activated.")
         # self.fields_layout.addWidget(self.addpwd_input)
         else:
             addpwd_inp = False
-            showInfo("Password Protection is Deactivated.")
+            showInfo("Password protection is deactivated.")
 
     def addDownloadToLocationButton(self):
         # Create a check box
@@ -254,11 +256,11 @@ class DataWindow(QDialog):
         if state == 2:
             adddownloadto = True
             showInfo(
-                "Download To Location Button will now be integrated to your Addon!"
+                "\"Download to Location\" button will now be integrated into your addon!"
             )
         else:
             adddownloadto = False
-            showInfo("Download To Location Button is deactivated !")
+            showInfo("\"Download to Location\" button is deactivated!")
 
     def addOpenLinkButton(self):
         # Create a check box
@@ -271,10 +273,10 @@ class DataWindow(QDialog):
         global addopenlink
         if state == 2:
             addopenlink = True
-            showInfo("Open Link Button will now be integrated to your Addon!")
+            showInfo("\"Open Link\" button will now be integrated into your addon!")
         else:
             addopenlink = False
-            showInfo("Open Link Button is deactivated !")
+            showInfo("\"Open Link\" button is deactivated!")
 
     def saveData(self):
         global addon_dir, adddownloadto, addopenlink, addpwd_inp
@@ -289,7 +291,7 @@ class DataWindow(QDialog):
                 "addopenlink": str(addopenlink),
                 "adddownloadto": str(adddownloadto),
                 "addpwd_inp": str(addpwd_inp),
-                "Decklinks Name": str(addon_name),
+                "DeckLinks name": str(addon_name),
             }
         ]
         with open(str(config_path2), "w", encoding="utf-8") as f:
@@ -302,7 +304,7 @@ class DataWindow(QDialog):
             if not ok or not passphrase:
                 QMessageBox.warning(
                     self,
-                    "No Passphrase",
+                    "No passphrase",
                     "No passphrase provided. Aborting encryption.",
                 )
                 return
@@ -329,8 +331,8 @@ class DataWindow(QDialog):
             f.write(data_json)
         QMessageBox.information(
             self,
-            "Decklinks Saved",
-            f"Your encrypted Decknames and Links were saved under the collection '{addon_name}'!",
+            "DeckLinks saved",
+            f"Your encrypted decks and corresponding links were saved in the DeckLinks collection \"{addon_name}\"!",
         )
 
 
