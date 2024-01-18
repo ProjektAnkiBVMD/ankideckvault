@@ -25,7 +25,7 @@ config_path = addon_dir / "config2.json"  # Replace with the actual file path
 addopenlink = "False"
 adddownloadto = "False"
 addpwd_inp = "False"
-Decklinks_Name = "Deck"
+DeckLinks_name = "Deck"
 try:
     with open(config_path, "r") as file:
         data = json.load(file)
@@ -44,11 +44,11 @@ try:
         if "addpwd_inp" in config_data:
             addpwd_inp = config_data["addpwd_inp"]
 
-        if "Decklinks Name" in config_data:
-            Decklinks_Name = config_data["Decklinks Name"]
+        if "DeckLinks name" in config_data:
+            DeckLinks_name = config_data["DeckLinks name"]
 
 except FileNotFoundError:
-    showWarning(f"File not found: {config_path}. The Config File is Missing !")
+    showWarning(f"File not found: {config_path}. The config file is missing!")
 except json.JSONDecodeError:
     showWarning(f"Invalid JSON format in file: {config_path}")
 
@@ -167,7 +167,7 @@ class LinkViewer(QDialog):
             hlayout.addWidget(import_button)
 
             if adddownloadto == "True":
-                import_button_to = QPushButton("Download and Import to Location", self)
+                import_button_to = QPushButton("Download to Location and Import", self)
                 import_button_to.clicked.connect(
                     lambda _, link=link: self.downloadAndImportDeckwithdownloadto(link)
                 )
@@ -199,7 +199,7 @@ class LinkViewer(QDialog):
                         html_content = response.text
                     else:
                         showWarning(
-                            f"Failed to retrieve the HTML content. Status Code: {response.status_code}"
+                            f"Failed to retrieve the HTML content. Status code: {response.status_code}"
                         )
                         html_content = ""
 
@@ -257,9 +257,9 @@ class LinkViewer(QDialog):
 
                         # Initialize the progress dialog
                         dlg = QProgressDialog(
-                            "Downloading Deck...", "Abort", 0, total_length, self
+                            "Downloading deck...", "Abort", 0, total_length, self
                         )
-                        dlg.setWindowTitle("Download Progress")
+                        dlg.setWindowTitle("Download progress")
                         dlg.setWindowModality(Qt.WindowModal)
                         dlg.setAutoReset(False)
                         dlg.show()
@@ -277,12 +277,12 @@ class LinkViewer(QDialog):
                                         os.remove(deck_path)  # Delete the partial file
                                         return  # Exit the function
 
-                    showInfo("File has been downloaded! Starting to Import now!")
+                    showInfo("File has been downloaded! Starting to import now!")
                     # Import the deck to Anki
                     try:
                         mw.taskman.run_on_main(lambda: self.importDeck(deck_path))
                     except Exception as e:
-                        showWarning(f"An Error occured when importing: {e}")
+                        showWarning(f"An error occured when importing: {e}")
 
                 download_file(form_data, link, deck_path)
             else:
@@ -294,9 +294,9 @@ class LinkViewer(QDialog):
 
                         # Initialize the progress dialog
                         dlg = QProgressDialog(
-                            "Downloading Deck...", "Abort", 0, total_length, self
+                            "Downloading deck...", "Abort", 0, total_length, self
                         )
-                        dlg.setWindowTitle("Download Progress")
+                        dlg.setWindowTitle("Download progress")
                         dlg.setWindowModality(Qt.WindowModal)
                         dlg.setAutoReset(False)
                         dlg.show()
@@ -315,12 +315,12 @@ class LinkViewer(QDialog):
                                         os.remove(deck_path)  # Delete the partial file
                                         return  # Exit the function
                 try:
-                    showInfo("File has been downloaded! Starting to Import now!")
+                    showInfo("File has been downloaded! Starting to import now!")
                     mw.taskman.run_on_main(lambda: self.importDeck(deck_path))
                 except Exception as e:
-                    showWarning(f"An Error occured when importing: {e}")
+                    showWarning(f"An error occured when importing: {e}")
         except Exception as e:
-            showWarning(f"An Error occured when downloading: {e}")
+            showWarning(f"An error occured when downloading: {e}")
 
     def importDeck(self, deck_path):
         try:
@@ -394,11 +394,11 @@ def load_data():
                     data = json.loads(json_string)
                     return data
                 except:
-                    showWarning("Passphrase Incorrect or File Corrupt!")
+                    showWarning("Passphrase incorrect or file corrupt!")
                     return None
             else:
                 showWarning(
-                    "Please repeat the Process but this time please input a passphrase"
+                    "Please repeat the process but remember to input a passphrase."
                 )
         else:
             try:
@@ -415,6 +415,6 @@ def openLinkViewer():
         viewer.exec_()
 
 
-action = QAction(f"View {Decklinks_Name} Links", mw)
+action = QAction(f"View {DeckLinks_name} Links", mw)
 action.triggered.connect(openLinkViewer)
 mw.form.menuTools.addAction(action)
