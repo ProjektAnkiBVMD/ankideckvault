@@ -1,4 +1,4 @@
-<center><a href="https://ibb.co/mCQYxms"><img src="https://i.ibb.co/mCQYxms/rsz-ankideckvault.png" alt="rsz-ankideckvault" border="0"></a></center>
+<center><a href='https://github.com/ProjektAnkiBVMD/ankideckvault/' target='_blank'><img src='https://i.postimg.cc/HVxHZhQs/rsz-ankideckvault.png' border='0' alt='rsz-ankideckvault'/></a></center>
 
 # Sharing Files on Google Drive
 
