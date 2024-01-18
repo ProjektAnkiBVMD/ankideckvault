@@ -1,5 +1,6 @@
 # _**ankideckvault**_
-![rsz_ankideckvault](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/f155c1c3-a2bc-46f0-948b-26d052a5e46f)
+
+![AnkiDeckVault (2)](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/77a2bc52-9db1-49c3-8454-b34be2b044f3)
 
 This Anki add-on introduces an innovative approach to managing and accessing Anki decks through encrypted links. It is designed to enhance the security and privacy of users who wish to share or distribute their Anki decks.
 The key features of this add-on are as follows:
