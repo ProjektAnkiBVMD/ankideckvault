@@ -1,1 +1,8 @@
-[{"addopenlink": "False", "adddownloadto": "False", "addpwd_inp": "True", "Decklinks Name": "Projekt Anki"}]
+[
+    {
+        "addopenlink": "False",
+        "adddownloadto": "False",
+        "addpwd_inp": "True",
+        "Decklinks Name": "Projekt Anki"
+    }
+]
