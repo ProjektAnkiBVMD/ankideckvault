@@ -3,7 +3,7 @@ Open Google Drive:
 2. Click on share.
 
 3. Below the link, make sure not to restrict your sharing options.
-   ![image](https://lh4.googleusercontent.com/_BbV-0WS_v7dGXvTE6-Qi94ilTFjT-JK_7nkiE89j1NTNy5Gt2u9pIc9nWpw-t87WBevhRFyBUqNR1oGGC4BVKRqrj7T9Wnz7tguOy9jM_WqDrGpaK4T8i0-WyrYKMURfQ=w1280)
+   ![image](https://lh3.googleusercontent.com/YWgGFuF1I9M5CLN_IFL1vVPNrUBYl0w7ClcspzwoGSh-CRw_kt6E-5Hf8wM9-KqWHJpchTnw9oFB6cr06w-Y_LNasYesEeNSLkFK8aGbflYsYLPw6-xcSzyLjgIpllwrOg=w1280)
 5. Copying a file link from Google Drive
 6. Click on Copy link.
 
