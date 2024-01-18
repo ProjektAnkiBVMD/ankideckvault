@@ -1,0 +1,15 @@
+{
+  "package": "AnkiDeckVault",
+  "name": "Anki DeckVault",
+  "repo-name": "ankideckvault-addon",
+  "ankiweb-id": "123456789",
+  "author": "Unlucky-life",
+  "conflicts": [],
+  "version": "1.0.0v",
+  "targets": [
+    "anki21"
+  ],
+  "min_point_version": "2.1.36",
+  "max_tested_anki_version": "2.1.66",
+  "ankiweb_conflicts_with_local": false
+}
