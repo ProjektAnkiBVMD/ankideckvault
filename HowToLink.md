@@ -25,4 +25,4 @@ Pictures and Instructions from: https://sites.google.com/site/gdocs2direct/
      ![image](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/c53e2df3-24c0-4b12-b87d-fb2d754aa33e)
 
   3. Now you just need to copy the link above into the addon window
-     (the link should looke something like this: https://drive.usercontent.google.com/download?id=(thefileid)&export=download&authuser=0)
+     (the link should look something like this: https://drive.usercontent.google.com/download?id=(thefileid)&export=download&authuser=0)
