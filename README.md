@@ -1,9 +1,6 @@
 # _**ankideckvault**_
 ![rsz_ankideckvault](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/f155c1c3-a2bc-46f0-948b-26d052a5e46f)
 
-![image](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/5f55b391-ca7a-41e5-87d3-e0a34fef7b4c)
-
-
 This Anki add-on introduces an innovative approach to managing and accessing Anki decks through encrypted links. It is designed to enhance the security and privacy of users who wish to share or distribute their Anki decks.
 The key features of this add-on are as follows:
 
@@ -11,8 +8,9 @@ The key features of this add-on are as follows:
 
 ![image](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/eba2a566-a489-42af-8022-7c8914253c6e)
 
-
 **Password-Protected Access**: Users can download and access the encrypted decks, but only by entering the correct password. This feature ensures that only those with the appropriate permissions can access the content of the decks.
+
+![image](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/5f55b391-ca7a-41e5-87d3-e0a34fef7b4c)
 
 **User Interface Concealment:** The add-on provides a user interface that does not display the encrypted links. This design choice further enhances security by hiding the direct paths to the decks.
 
