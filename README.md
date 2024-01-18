@@ -1,6 +1,6 @@
 # ankideckvault
+![rsz_ankideckvault](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/f155c1c3-a2bc-46f0-948b-26d052a5e46f)
 
-!['Anki DeckVault'](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/5d28b549-45e1-4027-9217-11c190dca2d5)
 
 ![image](https://github.com/ProjektAnkiBVMD/ankideckvault/assets/77027147/5f55b391-ca7a-41e5-87d3-e0a34fef7b4c)
 
