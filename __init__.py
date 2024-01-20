@@ -80,9 +80,9 @@ class DataWindow(QDialog):
         self.addInputFields_button = QPushButton("Add input field", self)
         self.addInputFields_button.clicked.connect(self.addInputFields)
 
-        # Speichern-Button
-        # self.save_button = QPushButton('Save Data', self)
-        # self.save_button.clicked.connect(self.saveData)
+        # HowToLink-Button
+        self.howtolink_button = QPushButton('Guide How Links are made', self)
+        self.howtolink_button.clicked.connect(HowToLinkWindow.show_win)
 
         # Füge das Felder-Layout zum Hauptlayout hinzu
         main_layout.addLayout(self.fields_layout)
@@ -95,7 +95,7 @@ class DataWindow(QDialog):
 
         # Füge den Speichern-Button zum Hauptlayout hinzu
         main_layout.addWidget(self.addInputFields_button)
-        # main_layout.addWidget(self.save_button)
+        main_layout.addWidget(self.howtolink_button)
 
         # Add a button to create the .ankiaddon file
         self.create_ankiaddon_button = QPushButton("Create .ankiaddon", self)
@@ -351,3 +351,37 @@ def openDataWindow():
 action = QAction("Create Deck Addon", mw)
 action.triggered.connect(openDataWindow)
 mw.form.menuTools.addAction(action)
+
+
+class LinkHelpWidget(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("Pokémon Type Effectiveness Table")
+        global addon_dir
+
+        # Create a label and set HTML content
+        label = QLabel()
+        html_content = self.read_html_file(f"{addon_dir}/howtolink.html")  # Replace with the path to your HTML file
+        label.setText(html_content)  # 'html_table' contains the HTML table string
+        label.setWordWrap(True)
+
+        # Layout
+        layout = QVBoxLayout()
+        layout.addWidget(label)
+        self.setLayout(layout)
+    def read_html_file(self, file_path):
+        """Reads an HTML file and returns its content as a string."""
+        with open(file_path, 'r', encoding='utf-8') as file:
+            return file.read()
+    def show_win(self):
+        global stripped_version
+        if int(stripped_version) == 23:
+            self.exec()  # Jetzt funktioniert exec_(), da DataWindow von QDialog erbt
+        else:
+            self.exec_()
+
+HowToLinkWindow = LinkHelpWidget()
+
