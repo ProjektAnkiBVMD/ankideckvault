@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright: Damien Elmes <anki@ichi2.net>
-#            Glutanimate <github.com/glutanimate>
-# License: GNU GPL, version 3 or later; http://www.gnu.org/copyleft/gpl.html
-
+import anki
 from anki.hooks import wrap
 from datetime import datetime
 from aqt import dialogs
@@ -27,6 +23,13 @@ from hashlib import sha256
 import os
 import platform
 import subprocess
+from aqt.utils import showInfo
+from PyQt6.QtCore import PYQT_VERSION_STR
+# Get the current PyQt version
+pyqt_version_str = PYQT_VERSION_STR
+anki_version = anki.version
+first_dot_position = anki_version.find('.')
+stripped_version = anki_version[0:first_dot_position]
 
 config = mw.addonManager.getConfig(__name__)
 
@@ -339,7 +342,10 @@ class DataWindow(QDialog):
 
 def openDataWindow():
     window = DataWindow()
-    window.exec_()  # Jetzt funktioniert exec_(), da DataWindow von QDialog erbt
+    if int(stripped_version) == 23:
+        window.exec()  # Jetzt funktioniert exec_(), da DataWindow von QDialog erbt
+    else:
+        window.exec_()
 
 
 action = QAction("Create Deck Addon", mw)

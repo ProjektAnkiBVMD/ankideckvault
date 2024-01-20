@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import anki
 import json
 import tempfile
 import webbrowser
@@ -15,11 +16,25 @@ from tempfile import NamedTemporaryFile
 import base64
 from hashlib import sha256
 from bs4 import BeautifulSoup
+from aqt.utils import showInfo
+from PyQt6.QtCore import PYQT_VERSION_STR
+
+# Get the current PyQt version
+pyqt_version_str = PYQT_VERSION_STR
+anki_version = anki.version
+first_dot_position = anki_version.find('.')
+stripped_version = anki_version[0:first_dot_position]
 
 # Ensure that your addon directory is correctly referenced
 addon_dir = Path(__file__).parent
 # Define the file path to your JSON file
 config_path = addon_dir / "config2.json"  # Replace with the actual file path
+
+# Get the current PyQt version
+pyqt_version_str = PYQT_VERSION_STR
+anki_version = anki.version
+first_dot_position = anki_version.find('.')
+stripped_version = anki_version[0:first_dot_position]
 
 # Initialize default values for the variables
 addopenlink = "False"
@@ -74,12 +89,14 @@ def decrypt_data(encrypted_data, passphrase):
 
 
 class LinkViewer(QDialog):
-    def __init__(self, data, parent=None):
+    def __init__(self, data, parent=mw):
         super().__init__(parent)
         # data = load_data()
+        self.setGeometry(300, 300, 500, 200)
         self.data = data
         self.temp_files = []  # List to keep track of temporary file paths
         self.initUI()
+
 
     def initUI(self):
         global addopenlink, adddownloadto, addpwd_inp
@@ -89,7 +106,10 @@ class LinkViewer(QDialog):
 
         # Create and add a label for the collection name below the passphrase input
         collection_label = QLabel(f"{collection_name}")
-        collection_label.setAlignment(Qt.AlignCenter)
+        if int(stripped_version) == 23:
+            collection_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        else:
+            collection_label.setAlignment(Qt.AlignCenter)
         font = collection_label.font()
         font.setPointSize(14)
         collection_label.setFont(font)
@@ -139,7 +159,11 @@ class LinkViewer(QDialog):
 
             # Create a frame for each entry to apply the border
             entry_frame = QFrame()
-            entry_frame.setFrameShape(QFrame.StyledPanel)  # Styled panel frame shape
+            if int(stripped_version) == 23:
+                entry_frame.setFrameShape(QFrame.Shape.StyledPanel)
+            else:
+                entry_frame.setFrameShape(QFrame.StyledPanel)  # Styled panel frame shape
+
             entry_frame.setStyleSheet(
                 """
                             QFrame {
@@ -191,19 +215,22 @@ class LinkViewer(QDialog):
 
                 def get_html_content(link):
                     # Send a GET request to the specified URL
-                    response = requests.get(link)
+                    try:
+                        response = requests.get(link)
 
-                    # Check if the request was successful
-                    if response.status_code == 200:
-                        # Save the HTML content of the page in the html_content variable
-                        html_content = response.text
-                    else:
-                        showWarning(
-                            f"Failed to retrieve the HTML content. Status code: {response.status_code}"
-                        )
-                        html_content = ""
+                        # Check if the request was successful
+                        if response.status_code == 200:
+                            # Save the HTML content of the page in the html_content variable
+                            html_content = response.text
+                        else:
+                            showWarning(
+                                f"Failed to retrieve the HTML content. Status code: {response.status_code}"
+                            )
+                            html_content = ""
 
-                    return f"{html_content}"
+                        return f"{html_content}"
+                    except Exception as e:
+                        showWarning(f"An error occured {e}")
 
                 html_content = get_html_content(url)
 
@@ -234,56 +261,60 @@ class LinkViewer(QDialog):
                     return form_data
 
                 form_data = get_info(html_content)
-
+                #showInfo("get info succesful")
                 def download_file(form_data, url, destination):
-                    # These are the form fields extracted from the HTML form
-                    params = {
-                        "id": form_data["id"],
-                        "export": form_data["export"],
-                        "authuser": form_data["authuser"],
-                        "confirm": form_data["confirm"],
-                        # The value for the 'confirm' might change and needs to be extracted dynamically
-                    }
-
-                    # The action URL from the form
-                    action_url = "https://drive.usercontent.google.com/download"
-
-                    # Submit the form by sending a GET request with the parameters
-                    with requests.get(
-                        action_url, params=params, stream=True
-                    ) as response:
-                        response.raise_for_status()  # Check for HTTP errors
-                        total_length = int(response.headers.get("content-length", 0))
-
-                        # Initialize the progress dialog
-                        dlg = QProgressDialog(
-                            "Downloading deck...", "Abort", 0, total_length, self
-                        )
-                        dlg.setWindowTitle("Download progress")
-                        dlg.setWindowModality(Qt.WindowModal)
-                        dlg.setAutoReset(False)
-                        dlg.show()
-                        # Write to the file in chunks and update the progress bar
-                        with open(deck_path, "wb") as f:
-                            downloaded = 0
-                            for chunk in response.iter_content(chunk_size=16384):
-                                if chunk:  # filter out keep-alive new chunks
-                                    downloaded += len(chunk)
-                                    f.write(chunk)
-                                    dlg.setValue(downloaded)
-                                    QApplication.processEvents()  # Process UI events to update the dialog
-                                    if dlg.wasCanceled():
-                                        f.close()  # Close the file
-                                        os.remove(deck_path)  # Delete the partial file
-                                        return  # Exit the function
-
-                    showInfo("File has been downloaded! Starting to import now!")
-                    # Import the deck to Anki
                     try:
-                        mw.taskman.run_on_main(lambda: self.importDeck(deck_path))
-                    except Exception as e:
-                        showWarning(f"An error occured when importing: {e}")
+                        # These are the form fields extracted from the HTML form
+                        params = {
+                            "id": form_data["id"],
+                            "export": form_data["export"],
+                            "authuser": form_data["authuser"],
+                            "confirm": form_data["confirm"],
+                            # The value for the 'confirm' might change and needs to be extracted dynamically
+                        }
 
+                        # The action URL from the form
+                        action_url = "https://drive.usercontent.google.com/download"
+
+                        # Submit the form by sending a GET request with the parameters
+                        with requests.get(
+                            action_url, params=params, stream=True
+                        ) as response:
+                            response.raise_for_status()  # Check for HTTP errors
+                            total_length = int(response.headers.get("content-length", 0))
+
+                            # Initialize the progress dialog
+                            dlg = QProgressDialog("Downloading deck...", "Abort", 0, total_length, self)
+                            dlg.setWindowTitle("Download progress")
+                            #if int(stripped_version) == 23:
+                                #dlg.setWindowModality(Qt.WindowType.WindowModal)
+                            #else:
+                                #dlg.setWindowModality(Qt.WindowModal)
+                            dlg.setModal(True)  # Set the dialog as modal
+                            dlg.setAutoReset(False)
+                            dlg.show()
+                            # Write to the file in chunks and update the progress bar
+                            with open(deck_path, "wb") as f:
+                                downloaded = 0
+                                for chunk in response.iter_content(chunk_size=16384):
+                                    if chunk:  # filter out keep-alive new chunks
+                                        downloaded += len(chunk)
+                                        f.write(chunk)
+                                        dlg.setValue(downloaded)
+                                        QApplication.processEvents()  # Process UI events to update the dialog
+                                        if dlg.wasCanceled():
+                                            f.close()  # Close the file
+                                            os.remove(deck_path)  # Delete the partial file
+                                            return  # Exit the function
+
+                        showInfo("File has been downloaded! Starting to import now!")
+                        # Import the deck to Anki
+                        try:
+                            mw.taskman.run_on_main(lambda: self.importDeck(deck_path))
+                        except Exception as e:
+                            showWarning(f"An error occured when importing: {e}")
+                    except Exception as e:
+                        showWarning(f"An error occured when downloading: {e}")
                 download_file(form_data, link, deck_path)
             else:
                 # Create a session object for persistent connections
@@ -297,7 +328,10 @@ class LinkViewer(QDialog):
                             "Downloading deck...", "Abort", 0, total_length, self
                         )
                         dlg.setWindowTitle("Download progress")
-                        dlg.setWindowModality(Qt.WindowModal)
+                        if int(stripped_version) == 23:
+                            dlg.setWindowModality(Qt.WindowType.WindowModal)
+                        else:
+                            dlg.setWindowModality(Qt.WindowModal)
                         dlg.setAutoReset(False)
                         dlg.show()
 
@@ -411,9 +445,15 @@ def load_data():
 def openLinkViewer():
     data = load_data()
     if data:
-        viewer = LinkViewer(data)
-        viewer.exec_()
-
+        try:
+            viewer = LinkViewer(data)
+            if int(stripped_version) == 23:
+                viewer.exec()  # Jetzt funktioniert exec_(), da DataWindow von QDialog erbt
+            else:
+                viewer.exec_()
+        except Exception as e:
+            showWarning(f"Error opening LinkViewer: {e}")
+        
 
 action = QAction(f"View {DeckLinks_name} Links", mw)
 action.triggered.connect(openLinkViewer)
