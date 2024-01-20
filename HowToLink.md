@@ -16,6 +16,7 @@ Pictures and Instructions from: https://sites.google.com/site/gdocs2direct/
 
 => For Larger Files on Google Drive
 (Google uses on larger files a authentication (i believe the size this happens is around 500mb~)
+=> For this Step its important that you are logged into your gmail account and then follow the next steps!
 - you need to do two extra Steps:
   1. Open your Shared Link, like you normally would
      
@@ -26,3 +27,7 @@ Pictures and Instructions from: https://sites.google.com/site/gdocs2direct/
 
   3. Now you just need to copy the link above into the addon window
      (the link should look something like this: https://drive.usercontent.google.com/download?id=(thefileid)&export=download&authuser=0)
+
+If you do not own a Google-Account and you link looks like this: 
+**https://drive.usercontent.google.com/download?id=(thefileid)&export=download**
+=> Please add to your Link "&authuser=0" => This step is quite important for the DeckVault Link Encryption/Decryption
