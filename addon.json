@@ -1,11 +1,10 @@
 {
   "package": "AnkiDeckVault",
-  "name": "Anki DeckVault",
-  "repo-name": "ankideckvault-addon",
+  "name": "ankideckvault",
+  "repo-name": "ankideckvault",
   "ankiweb-id": "123456789",
-  "author": "Unlucky-life",
+  "author": "Unlucky-Life",
   "conflicts": [],
-  "version": "1.0.0v",
   "targets": [
     "anki21"
   ],
