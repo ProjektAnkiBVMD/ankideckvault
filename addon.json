@@ -1,8 +1,8 @@
 {
-  "package": "AnkiDeckVault",
-  "name": "ankideckvault",
-  "repo-name": "ankideckvault",
-  "ankiweb-id": "123456789",
+  "display_name": "AnkiDeckVault",
+  "module_name": "ankideckvault",
+  "repo_name": "ankideckvault",
+  "ankiweb_id": "123456789",
   "author": "Unlucky-Life",
   "conflicts": [],
   "targets": [
