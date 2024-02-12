@@ -67,6 +67,7 @@ except FileNotFoundError:
 except json.JSONDecodeError:
     showWarning(f"Invalid JSON format in file: {config_path}")
 
+
 # showInfo(f"{adddownloadto} , {addpwd_inp}, {addopenlink}")
 
 
@@ -96,7 +97,6 @@ class LinkViewer(QDialog):
         self.data = data
         self.temp_files = []  # List to keep track of temporary file paths
         self.initUI()
-
 
     def initUI(self):
         global addopenlink, adddownloadto, addpwd_inp
@@ -159,6 +159,7 @@ class LinkViewer(QDialog):
 
             # Create a frame for each entry to apply the border
             entry_frame = QFrame()
+
             if int(stripped_version) == 23:
                 entry_frame.setFrameShape(QFrame.Shape.StyledPanel)
             else:
@@ -168,34 +169,53 @@ class LinkViewer(QDialog):
                 """
                             QFrame {
                                 padding: 5px;  # Space inside the frame
-                                margin: 5px;  # Space outside the frame
+                                margin: auto;  # Space outside the frame
                                 border: 1px solid #007ACC;  # Blue border
                                 border-radius: 5px;  # Rounded corners
                             }
                         """
             )
-            hlayout = QHBoxLayout(entry_frame)  # Set the frame as the parent of hlayout
 
-            label = QLabel(name)
+            if link == "Subtitle":
+                hlayout = QHBoxLayout(entry_frame)  # Set the frame as the parent of hlayout
+                label = QLabel(name)
+                # Set the font size using QFont
+                font = QFont()
+                font.setPointSize(25)  # Set the font size to 16
+                label.setFont(font)
+            elif link == "Info":
+                hlayout = QHBoxLayout(entry_frame)  # Set the frame as the parent of hlayout
+                label = QLabel(name)
+                if int(stripped_version) == 23:
+                    label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+                else:
+                    label.setAlignment(Qt.AlignCenter)
+                font = QFont()
+                font.setPointSize(16)  # Set the font size to 16
+                label.setFont(font)
+            else:
+                hlayout = QHBoxLayout(entry_frame)  # Set the frame as the parent of hlayout
+                label = QLabel(name)
             hlayout.addWidget(label)
 
-            if addopenlink == "True":
-                open_button = QPushButton("Open Link", self)
-                open_button.clicked.connect(lambda _, link=link: self.openLink(link))
-                hlayout.addWidget(open_button)
+            if link != "Subtitle" and link != "Info":
+                if addopenlink == "True":
+                    open_button = QPushButton("Open Link", self)
+                    open_button.clicked.connect(lambda _, link=link: self.openLink(link))
+                    hlayout.addWidget(open_button)
 
-            import_button = QPushButton("Download and Import", self)
-            import_button.clicked.connect(
-                lambda _, link=link: self.downloadAndImportDeck(link)
-            )
-            hlayout.addWidget(import_button)
-
-            if adddownloadto == "True":
-                import_button_to = QPushButton("Download to Location and Import", self)
-                import_button_to.clicked.connect(
-                    lambda _, link=link: self.downloadAndImportDeckwithdownloadto(link)
+                import_button = QPushButton("Download and Import", self)
+                import_button.clicked.connect(
+                    lambda _, link=link: self.downloadAndImportDeck(link)
                 )
-                hlayout.addWidget(import_button_to)
+                hlayout.addWidget(import_button)
+
+                if adddownloadto == "True":
+                    import_button_to = QPushButton("Download to Location and Import", self)
+                    import_button_to.clicked.connect(
+                        lambda _, link=link: self.downloadAndImportDeckwithdownloadto(link)
+                    )
+                    hlayout.addWidget(import_button_to)
 
             container_layout.addLayout(hlayout)
             container_layout.addWidget(
@@ -261,7 +281,8 @@ class LinkViewer(QDialog):
                     return form_data
 
                 form_data = get_info(html_content)
-                #showInfo("get info succesful")
+
+                # showInfo("get info succesful")
                 def download_file(form_data, url, destination):
                     try:
                         # These are the form fields extracted from the HTML form
@@ -278,7 +299,7 @@ class LinkViewer(QDialog):
 
                         # Submit the form by sending a GET request with the parameters
                         with requests.get(
-                            action_url, params=params, stream=True
+                                action_url, params=params, stream=True
                         ) as response:
                             response.raise_for_status()  # Check for HTTP errors
                             total_length = int(response.headers.get("content-length", 0))
@@ -286,10 +307,10 @@ class LinkViewer(QDialog):
                             # Initialize the progress dialog
                             dlg = QProgressDialog("Downloading deck...", "Abort", 0, total_length, self)
                             dlg.setWindowTitle("Download progress")
-                            #if int(stripped_version) == 23:
-                                #dlg.setWindowModality(Qt.WindowType.WindowModal)
-                            #else:
-                                #dlg.setWindowModality(Qt.WindowModal)
+                            # if int(stripped_version) == 23:
+                            # dlg.setWindowModality(Qt.WindowType.WindowModal)
+                            # else:
+                            # dlg.setWindowModality(Qt.WindowModal)
                             dlg.setModal(True)  # Set the dialog as modal
                             dlg.setAutoReset(False)
                             dlg.show()
@@ -315,6 +336,7 @@ class LinkViewer(QDialog):
                             showWarning(f"An error occured when importing: {e}")
                     except Exception as e:
                         showWarning(f"An error occured when downloading: {e}")
+
                 download_file(form_data, link, deck_path)
             else:
                 # Create a session object for persistent connections
@@ -384,7 +406,7 @@ class LinkViewer(QDialog):
                     # Open the file with the chosen path and write to it
                     with open(deck_path, "wb") as f:
                         for chunk in response.iter_content(
-                            chunk_size=1024 * 1024
+                                chunk_size=1024 * 1024
                         ):  # 1 MB chunks
                             if chunk:  # filter out keep-alive new chunks
                                 f.write(chunk)
@@ -453,7 +475,7 @@ def openLinkViewer():
                 viewer.exec_()
         except Exception as e:
             showWarning(f"Error opening LinkViewer: {e}")
-        
+
 
 action = QAction(f"View {DeckLinks_name} Links", mw)
 action.triggered.connect(openLinkViewer)
