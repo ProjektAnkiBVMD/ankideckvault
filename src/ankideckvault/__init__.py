@@ -74,14 +74,18 @@ class DataWindow(QDialog):
 
         self.deckoverviewlayout = QVBoxLayout()
         # Füge das erste Eingabefeld-Paar hinzu
-        self.addInputFields()
+        #self.addInputFields()
         self.fields_layout.addLayout(self.deckoverviewlayout)
         # Inputfield-Button
         self.addInputFields_button = QPushButton("Add input field", self)
+        self.addSubtitle_button = QPushButton("Add title", self)
+        self.addInfoBox_button = QPushButton("Add infobox", self)
         self.addInputFields_button.clicked.connect(self.addInputFields)
+        self.addSubtitle_button.clicked.connect(self.addSubtitle)
+        self.addInfoBox_button.clicked.connect(self.addInfoBox)
 
         # HowToLink-Button
-        self.howtolink_button = QPushButton('Guide How Links are made', self)
+        self.howtolink_button = QPushButton('Guide How Google DriveLinks are made', self)
         self.howtolink_button.clicked.connect(HowToLinkWindow.show_win)
 
         # Füge das Felder-Layout zum Hauptlayout hinzu
@@ -93,8 +97,15 @@ class DataWindow(QDialog):
         self.addOpenLinkButton()
         self.fields_layout.addLayout(self.checkbox_layout)  # Add to the layout
 
+        self.button_layout = QHBoxLayout()
+        self.button_layout_widget = QWidget()
+
         # Füge den Speichern-Button zum Hauptlayout hinzu
-        main_layout.addWidget(self.addInputFields_button)
+        self.button_layout.addWidget(self.addInputFields_button)
+        self.button_layout.addWidget(self.addSubtitle_button)
+        self.button_layout.addWidget(self.addInfoBox_button)
+        self.button_layout_widget.setLayout(self.button_layout)
+        main_layout.addWidget(self.button_layout_widget)
         main_layout.addWidget(self.howtolink_button)
 
         # Add a button to create the .ankiaddon file
@@ -115,6 +126,22 @@ class DataWindow(QDialog):
         row_layout.addWidget(name_input)
         row_layout.addWidget(link_input)
         self.fields.append((name_input, link_input))
+        self.deckoverviewlayout.addLayout(row_layout)  # Füge dem Felder-Layout hinzu
+
+    def addSubtitle(self):
+        row_layout = QHBoxLayout()
+        name_input = QLineEdit(self)
+        name_input.setPlaceholderText("Write your Subtitle here")
+        row_layout.addWidget(name_input)
+        self.fields.append((name_input, "Subtitle"))
+        self.deckoverviewlayout.addLayout(row_layout)  # Füge dem Felder-Layout hinzu
+
+    def addInfoBox(self):
+        row_layout = QHBoxLayout()
+        name_input = QLineEdit(self)
+        name_input.setPlaceholderText("Write your description here")
+        row_layout.addWidget(name_input)
+        self.fields.append((name_input, "Info"))
         self.deckoverviewlayout.addLayout(row_layout)  # Füge dem Felder-Layout hinzu
 
     def format_drive_link(self, link):
@@ -316,11 +343,14 @@ class DataWindow(QDialog):
         all_data = {addon_name: []}
         for name_input, link_input in self.fields:
             name = name_input.text()
-            link = self.format_drive_link(
-                link_input.text()
-            )  # Format link if it's a Google Drive link
-            if name and link:
-                all_data[addon_name].append({"name": name, "link": link})
+            if link_input == "Subtitle":
+                all_data[addon_name].append({"name": name, "link": "Subtitle"})
+            elif link_input == "Info":
+                all_data[addon_name].append({"name": name, "link": "Info"})
+            else:
+                link = self.format_drive_link(link_input.text())  # Format link if it's a Google Drive link
+                if name and link:
+                    all_data[addon_name].append({"name": name, "link": link})
 
         if addpwd_inp is True:
             # Encrypt the data before saving
@@ -384,4 +414,3 @@ class LinkHelpWidget(QDialog):
             self.exec_()
 
 HowToLinkWindow = LinkHelpWidget()
-
