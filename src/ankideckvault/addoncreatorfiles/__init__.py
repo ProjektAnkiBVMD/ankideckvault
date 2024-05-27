@@ -307,10 +307,6 @@ class LinkViewer(QDialog):
                             # Initialize the progress dialog
                             dlg = QProgressDialog("Downloading deck...", "Abort", 0, total_length, self)
                             dlg.setWindowTitle("Download progress")
-                            # if int(stripped_version) == 23:
-                            # dlg.setWindowModality(Qt.WindowType.WindowModal)
-                            # else:
-                            # dlg.setWindowModality(Qt.WindowModal)
                             dlg.setModal(True)  # Set the dialog as modal
                             dlg.setAutoReset(False)
                             dlg.show()
@@ -333,9 +329,9 @@ class LinkViewer(QDialog):
                         try:
                             mw.taskman.run_on_main(lambda: self.importDeck(deck_path))
                         except Exception as e:
-                            showWarning(f"An error occured when importing: {e}")
+                            showWarning(f"An error occurred when importing: {e}")
                     except Exception as e:
-                        showWarning(f"An error occured when downloading: {e}")
+                        showWarning(f"An error occurred when downloading: {e}")
 
                 download_file(form_data, link, deck_path)
             else:
@@ -350,10 +346,7 @@ class LinkViewer(QDialog):
                             "Downloading deck...", "Abort", 0, total_length, self
                         )
                         dlg.setWindowTitle("Download progress")
-                        if int(stripped_version) == 23:
-                            dlg.setWindowModality(Qt.WindowType.WindowModal)
-                        else:
-                            dlg.setWindowModality(Qt.WindowModal)
+                        dlg.setModal(True)  # Set the dialog as modal
                         dlg.setAutoReset(False)
                         dlg.show()
 
@@ -374,10 +367,10 @@ class LinkViewer(QDialog):
                     showInfo("File has been downloaded! Starting to import now!")
                     mw.taskman.run_on_main(lambda: self.importDeck(deck_path))
                 except Exception as e:
-                    showWarning(f"An error occured when importing: {e}")
+                    showWarning(f"An error occurred when importing: {e}")
         except Exception as e:
-            showWarning(f"An error occured when downloading: {e}")
-
+            showWarning(f"An error occurred when downloading: {e}")
+    
     def importDeck(self, deck_path):
         try:
             importer = AnkiPackageImporter(mw.col, str(deck_path))
